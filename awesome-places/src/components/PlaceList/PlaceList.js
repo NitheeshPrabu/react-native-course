@@ -8,11 +8,11 @@ const placeList = props => {
     <FlatList
       style={styles.listContainer}
       data={props.places}
-      renderItem={(info, i) => (
+      renderItem={(info) => (
         <ListItem
           placeName={info.item.name}
-          placeImg={info.item.image}
-          onItemPressed={() => props.onItemDeleted(info.item.key)}
+          placeImage={info.item.image}
+          onItemPressed={() => props.onItemSelected(info.item.key)}
         />
       )}
     />
