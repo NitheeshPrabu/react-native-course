@@ -13,12 +13,17 @@ class EmployeeList extends Component {
 
   renderRow({ item }) {
     return <EmployeeListItem employee={item} />;
-    // return <Text>Hey</Text>;
   }
 
   render() {
     console.log(this.props.employees);
-    return <FlatList data={this.props.employees} renderItem={this.renderRow} />;
+    return (
+      <FlatList
+        data={this.props.employees}
+        renderItem={this.renderRow}
+        keyExtractor={(employee, index) => `employeelist-item-${index}`}
+      />
+    );
   }
 }
 
