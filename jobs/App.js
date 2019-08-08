@@ -1,31 +1,24 @@
-import {
-  createAppContainer,
-  createBottomTabNavigator,
-  createStackNavigator
-} from 'react-navigation';
+import React, { Component } from 'react';
+import { View, Platform, StatusBar } from 'react-native';
+import { Provider } from 'react-redux';
 
-import WelcomeScreen from './src/screens/WelcomeScreen';
-import AuthScreen from './src/screens/AuthScreen';
-import MapScreen from './src/screens/MapScreen';
-import DeckScreen from './src/screens/DeckScreen';
-import ReviewScreen from './src/screens/ReviewScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
+import Navigation from './src/RootNavigator';
+import store from './src/store';
 
-const ReviewNavigator = createStackNavigator({
-  review: { screen: ReviewScreen },
-  settings: { screen: SettingsScreen }
-});
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <View style={styles.containerStyle}>
+          <Navigation />
+        </View>
+      </Provider>
+    );
+  }
+}
 
-const MainNavigator = createBottomTabNavigator({
-  map: { screen: MapScreen },
-  deck: { screen: DeckScreen },
-  review: { screen: ReviewNavigator }
-});
-
-const RootNavigator = createBottomTabNavigator({
-  welcome: { screen: WelcomeScreen },
-  auth: { screen: AuthScreen },
-  main: { screen: MainNavigator }
-});
-
-export default createAppContainer(RootNavigator);
+const styles = {
+  containerStyle: {
+    flex: 1
+  }
+};
