@@ -1,8 +1,13 @@
 import axios from 'axios';
 import qs from 'qs';
 import striptags from 'striptags';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 
-import { FETCH_JOBS, LIKE_JOB } from './types';
+import { FETCH_JOBS, LIKE_JOB, CLEAR_LIKED_JOBS } from './types';
+
+TimeAgo.addLocale(en);
+const timeAgo = new TimeAgo('en-US');
 
 const LOCATION_ROOT_URL = 'https://us1.locationiq.com/v1/search.php?key=09d8e48d7a1ecf&';
 const LOCATION_QUERY_PARAMS = {
@@ -44,6 +49,7 @@ export const fetchJobs = (region, callback) => async dispatch => {
         return {
           ...job,
           description: striptags(job.description).substring(0, 100),
+          created_at: timeAgo.format(new Date(job.created_at)),
           latitude,
           longitude
         };
@@ -58,4 +64,8 @@ export const fetchJobs = (region, callback) => async dispatch => {
 
 export const likeJob = job => {
   return { type: LIKE_JOB, payload: job };
+};
+
+export const clearLikedJobs = () => {
+  return { type: CLEAR_LIKED_JOBS };
 };

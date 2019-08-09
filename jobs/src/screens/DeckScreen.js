@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
 import { View, Text, Platform, StatusBar } from 'react-native';
-import { connect } from 'react-redux';
-import MapView from 'react-native-maps';
 import { Card, Button } from 'react-native-elements';
-
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
+import MapView from 'react-native-maps';
+import { connect } from 'react-redux';
 
 import Swipe from '../components/Swipe';
 import { likeJob } from '../actions';
 
 class DeckScreen extends Component {
-  constructor(props) {
-    super(props);
-    // Add locale-specific relative date/time formatting rules.
-    TimeAgo.addLocale(en);
-  }
-
-  renderNoMoreCards() {
-    return <Card title="No More Cards!" />;
-  }
+  renderNoMoreCards = () => {
+    return (
+      <Card title="No More Jobs">
+        <Button
+          title="Back to Map"
+          buttonStyle={{ backgroundColor: '#03A9F4', height: 60 }}
+          icon={{ name: 'my-location' }}
+          onPress={() => this.props.navigation.navigate('map')}
+        />
+      </Card>
+    );
+  };
 
   renderCard(job) {
-    const timeAgo = new TimeAgo('en-US');
-
     const initialRegion = {
       latitude: +job.latitude,
       longitude: +job.longitude,
@@ -37,13 +35,13 @@ class DeckScreen extends Component {
           <MapView
             scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={Platform.OS === 'android' ? true : false}
+            cacheEnabled={Platform.OS === 'android'}
             initialRegion={initialRegion}
           />
         </View>
         <View style={styles.detailWrapper}>
           <Text>{job.company}</Text>
-          <Text>{timeAgo.format(new Date(job.created_at))}</Text>
+          <Text>{job.created_at}</Text>
         </View>
         <Text>{job.description}...</Text>
       </Card>

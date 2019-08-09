@@ -1,8 +1,10 @@
+import React from 'react';
 import {
   createBottomTabNavigator,
   createStackNavigator,
   createAppContainer
 } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 
 import WelcomeScreen from './screens/WelcomeScreen';
 import AuthScreen from './screens/AuthScreen';
@@ -16,11 +18,42 @@ const ReviewNavigator = createStackNavigator({
   settings: { screen: SettingsScreen }
 });
 
-const MainNavigator = createBottomTabNavigator({
-  map: { screen: MapScreen },
-  deck: { screen: DeckScreen },
-  review: { screen: ReviewNavigator }
-});
+const MainNavigator = createBottomTabNavigator(
+  {
+    map: {
+      screen: MapScreen,
+      navigationOptions: {
+        title: 'Map',
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="my-location" size={30} color={tintColor} />;
+        }
+      }
+    },
+    deck: {
+      screen: DeckScreen,
+      navigationOptions: {
+        title: 'Jobs',
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="description" size={30} color={tintColor} />;
+        }
+      }
+    },
+    review: {
+      screen: ReviewNavigator,
+      navigationOptions: {
+        title: 'Review Jobs',
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="favorite" size={30} color={tintColor} />;
+        }
+      }
+    }
+  },
+  {
+    tabBarOptions: {
+      labelStyle: { fontSize: 12 }
+    }
+  }
+);
 
 const RootNavigator = createBottomTabNavigator({
   welcome: {

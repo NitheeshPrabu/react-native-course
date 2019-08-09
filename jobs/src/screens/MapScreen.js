@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Platform, StatusBar } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
@@ -28,7 +28,9 @@ class MapScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View
+        style={{ flex: 1, marginTop: Platform.OS === 'android' ? StatusBar.currentHeight + 5 : 0 }}
+      >
         <MapView
           style={{ flex: 1 }}
           region={this.state.region}
