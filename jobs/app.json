@@ -18,7 +18,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.jobs"
+    },
+    "android": {
+      "package": "com.example.jobs"
     }
   }
 }
