@@ -1,31 +1,61 @@
 import axios from 'axios';
-import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
+import striptags from 'striptags';
 
-import { FETCH_JOBS } from './types';
+import { FETCH_JOBS, LIKE_JOB } from './types';
 
-const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?';
-const JOB_QUERY_PARAMS = {
-  publisher: '4201738803816157',
-  format: 'json',
-  v: '2',
-  latlong: 1,
-  radius: 10,
-  q: 'javascript'
+const LOCATION_ROOT_URL = 'https://us1.locationiq.com/v1/search.php?key=09d8e48d7a1ecf&';
+const LOCATION_QUERY_PARAMS = {
+  format: 'json'
 };
 
-const buildJobsUrl = zip => {
-  const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip });
+const JOB_ROOT_URL = 'https://jobs.github.com/positions.json?';
+const JOB_QUERY_PARAMS = {
+  description: 'javascript'
+};
+
+const buildLocationUrl = location => {
+  const query = qs.stringify({ q: location, ...LOCATION_QUERY_PARAMS });
+  return `${LOCATION_ROOT_URL}${query}`;
+};
+
+const buildJobsUrl = ({ latitude, longitude }) => {
+  const query = qs.stringify({ ...JOB_QUERY_PARAMS, lat: latitude, long: longitude });
   return `${JOB_ROOT_URL}${query}`;
 };
 
-export const fetchJobs = region => async dispatch => {
+const getLatLong = async (location, region) => {
   try {
-    let zip = await reverseGeocode(region);
-    const url = buildJobsUrl(zip);
+    const url = buildLocationUrl(location);
     let { data } = await axios.get(url);
-    dispatch({ type: FETCH_JOBS, payload: data });
+    return { latitude: data[0].lat, longitude: data[0].lon };
+  } catch (err) {
+    return region;
+  }
+};
+
+export const fetchJobs = (region, callback) => async dispatch => {
+  try {
+    const jobsUrl = buildJobsUrl(region);
+    let { data } = await axios.get(jobsUrl);
+    let jobs = await Promise.all(
+      data.map(async job => {
+        let { latitude, longitude } = await getLatLong(job.location, region);
+        return {
+          ...job,
+          description: striptags(job.description).substring(0, 100),
+          latitude,
+          longitude
+        };
+      })
+    );
+    dispatch({ type: FETCH_JOBS, payload: jobs });
+    callback();
   } catch (err) {
     console.log(err);
   }
+};
+
+export const likeJob = job => {
+  return { type: LIKE_JOB, payload: job };
 };
