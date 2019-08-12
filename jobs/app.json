@@ -22,7 +22,12 @@
       "bundleIdentifier": "com.example.jobs"
     },
     "android": {
-      "package": "com.example.jobs"
+      "package": "com.example.jobs",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBjDeSStbJOKWkZ7pn5j0a-ELsbPou1310"
+        }
+      }
     }
   }
 }
