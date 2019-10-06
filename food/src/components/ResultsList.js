@@ -7,11 +7,15 @@ import ResultsDetail from './ResultsDetail';
 const ResultsList = ({ title, results, navigation }) => {
   const renderItem = item => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('ResultsShow')}>
+      <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
         <ResultsDetail result={item} />
       </TouchableOpacity>
     );
   };
+
+  if (!results.length) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
