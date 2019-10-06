@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 
-const ComponentScreen = props => {
-  const name = 'Nitheesh';
+const ComponentsScreen = () => {
+  const name = 'Stephen';
 
   return (
     <View>
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ComponentScreen;
+export default ComponentsScreen;
