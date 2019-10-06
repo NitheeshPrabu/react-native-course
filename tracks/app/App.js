@@ -15,9 +15,12 @@ import TrackListScreen from './src/screens/TrackListScreen';
 import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
 
+import { setNavigator } from './src/helpers/navigationRef';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
+
 const loginStackNav = createStackNavigator({
-  Signup: SignupScreen,
-  Signin: SigninScreen
+  Signin: SigninScreen,
+  Signup: SignupScreen
 });
 
 const trackListStackNav = createStackNavigator({
@@ -32,6 +35,7 @@ const mainBottomTabNav = createBottomTabNavigator({
 });
 
 const switchNavigtor = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
   loginFlow: loginStackNav,
   mainFlow: mainBottomTabNav
 });
@@ -39,7 +43,13 @@ const switchNavigtor = createSwitchNavigator({
 const App = createAppContainer(switchNavigtor);
 
 export default () => {
-  <AuthProvider>
-    <App />
-  </AuthProvider>;
+  return (
+    <AuthProvider>
+      <App
+        ref={navigator => {
+          setNavigator(navigator);
+        }}
+      />
+    </AuthProvider>
+  );
 };
