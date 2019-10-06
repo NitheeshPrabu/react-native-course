@@ -6,6 +6,8 @@ import {
   createSwitchNavigator
 } from 'react-navigation';
 
+import { Provider as AuthProvider } from './src/context/AuthContext';
+
 import AccountScreen from './src/screens/AccountScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
@@ -34,4 +36,10 @@ const switchNavigtor = createSwitchNavigator({
   mainFlow: mainBottomTabNav
 });
 
-export default createAppContainer(switchNavigtor);
+const App = createAppContainer(switchNavigtor);
+
+export default () => {
+  <AuthProvider>
+    <App />
+  </AuthProvider>;
+};
