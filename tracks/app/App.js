@@ -7,6 +7,7 @@ import {
 } from 'react-navigation';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as LocationProvider } from './src/context/LocationContext';
 
 import AccountScreen from './src/screens/AccountScreen';
 import SigninScreen from './src/screens/SigninScreen';
@@ -14,9 +15,9 @@ import SignupScreen from './src/screens/SignupScreen';
 import TrackListScreen from './src/screens/TrackListScreen';
 import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
 import { setNavigator } from './src/helpers/navigationRef';
-import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
 const loginStackNav = createStackNavigator({
   Signin: SigninScreen,
@@ -44,12 +45,14 @@ const App = createAppContainer(switchNavigtor);
 
 export default () => {
   return (
-    <AuthProvider>
-      <App
-        ref={navigator => {
-          setNavigator(navigator);
-        }}
-      />
-    </AuthProvider>
+    <LocationProvider>
+      <AuthProvider>
+        <App
+          ref={navigator => {
+            setNavigator(navigator);
+          }}
+        />
+      </AuthProvider>
+    </LocationProvider>
   );
 };
