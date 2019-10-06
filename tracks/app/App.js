@@ -1,19 +1,37 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  createAppContainer,
+  createStackNavigator,
+  createBottomTabNavigator,
+  createSwitchNavigator
+} from 'react-navigation';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+import AccountScreen from './src/screens/AccountScreen';
+import SigninScreen from './src/screens/SigninScreen';
+import SignupScreen from './src/screens/SignupScreen';
+import TrackListScreen from './src/screens/TrackListScreen';
+import TrackCreateScreen from './src/screens/TrackCreateScreen';
+import TrackDetailScreen from './src/screens/TrackDetailScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const loginStackNav = createStackNavigator({
+  Signup: SignupScreen,
+  Signin: SigninScreen
 });
+
+const trackListStackNav = createStackNavigator({
+  TrackList: TrackListScreen,
+  TrackDetail: TrackDetailScreen
+});
+
+const mainBottomTabNav = createBottomTabNavigator({
+  trackListFlow: trackListStackNav,
+  TrackCreate: TrackCreateScreen,
+  Account: AccountScreen
+});
+
+const switchNavigtor = createSwitchNavigator({
+  loginFlow: loginStackNav,
+  mainFlow: mainBottomTabNav
+});
+
+export default createAppContainer(switchNavigtor);
