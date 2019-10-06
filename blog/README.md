@@ -24,3 +24,5 @@ By default, the json-server is only available locally. To expose it to the outsi
 ```bash
 npm run tunnel
 ```
+
+_**Note:** Each instance of `ngrok` lasts only for 8hours. After that, you need to restart the `ngrok` instance. Each restart of the `ngrok` instance will change the forwaring URL (atleast on a free instance), and thus you have to update your endpoint to match the new URL provided._
