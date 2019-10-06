@@ -31,4 +31,12 @@ npm install (or yarn install)
 
 - Alternatively, you can set up config variables or environment variables in your remote deployment instance (for eg. Heroku).
 
-To use the included Express server as your backend, start the server using `npm run start` (or `yarn start`). Obtain your local machine's IP and change your API endpoint in the app. If you want to expose your local server across other networks, use tools like [ngrok](https://ngrok.com/).
+To use the included Express server as your backend, start the server using `npm run start` (or `yarn start`). Obtain your local machine's IP and change your API endpoint in the app. If you want to expose your local server across other networks, use tools like [ngrok](https://ngrok.com/) (also included in the `server` setup).
+
+```bash
+npm run tunnel
+```
+
+_**Note:** Each instance of `ngrok` lasts only for 8hours. After that, you need to restart the `ngrok` instance. Each restart of the `ngrok` instance will change the forwaring URL (atleast on a free instance), and thus you have to update your endpoint to match the new URL provided._
+
+_Don't forget to change the port in the `ngrok` tunnel script if you decide to modify the port enviroment variable._
