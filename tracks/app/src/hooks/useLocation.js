@@ -1,30 +1,45 @@
 import { useState, useEffect } from 'react';
 import { Accuracy, requestPermissionsAsync, watchPositionAsync } from 'expo-location';
 
-export default callback => {
+export default (shouldTrack, callback) => {
   const [error, setError] = useState(null);
 
-  const startWatching = async () => {
-    try {
-      await requestPermissionsAsync();
-      await watchPositionAsync(
-        {
-          accuracy: Accuracy.BestForNavigation,
-          timeInterval: 2000,
-          distanceInterval: 10
-        },
-        location => {
-          callback(location);
-        }
-      );
-    } catch (err) {
-      setError(err);
-    }
-  };
-
+  // run first time useLocation() is called, and then re-run each time shouldTrack,
+  // or the callback changes
   useEffect(() => {
-    startWatching();
-  }, []);
+    let subscriber;
+
+    const startWatching = async () => {
+      try {
+        await requestPermissionsAsync();
+        subscriber = await watchPositionAsync(
+          {
+            accuracy: Accuracy.BestForNavigation,
+            timeInterval: 2000,
+            distanceInterval: 10
+          },
+          callback
+        );
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    if (shouldTrack) {
+      startWatching();
+    } else {
+      if (subscriber) {
+        subscriber.remove();
+      }
+      subscriber = null;
+    }
+
+    return () => {
+      if (subscriber) {
+        subscriber.remove();
+      }
+    };
+  }, [shouldTrack, callback]);
 
   return [error];
 };
