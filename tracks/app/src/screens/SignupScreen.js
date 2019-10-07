@@ -25,6 +25,7 @@ const SignupScreen = () => {
 };
 
 // can be a function returning an object, or just directly an object, like so
+// use function when you want to customise the returned value using the props
 SignupScreen.navigationOptions = {
   header: null
 };

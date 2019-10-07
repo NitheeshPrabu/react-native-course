@@ -5,6 +5,7 @@ import {
   createBottomTabNavigator,
   createSwitchNavigator
 } from 'react-navigation';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as LocationProvider } from './src/context/LocationContext';
@@ -29,6 +30,11 @@ const trackListStackNav = createStackNavigator({
   TrackList: TrackListScreen,
   TrackDetail: TrackDetailScreen
 });
+
+trackListStackNav.navigationOptions = {
+  title: 'Tracks',
+  tabBarIcon: <FontAwesome name="th-list" size={20} />
+};
 
 const mainBottomTabNav = createBottomTabNavigator({
   trackListFlow: trackListStackNav,
