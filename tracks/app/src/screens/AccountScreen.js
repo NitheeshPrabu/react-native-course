@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
@@ -24,7 +23,5 @@ AccountScreen.navigationOptions = {
   title: 'Account',
   tabBarIcon: <FontAwesome name="gear" size={20} />
 };
-
-const styles = StyleSheet.create({});
 
 export default AccountScreen;

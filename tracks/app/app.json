@@ -4,11 +4,7 @@
     "slug": "tracks",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,11 +16,18 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nitheesh.tracks"
+    },
+    "android": {
+      "package": "com.nitheesh.tracks",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBjDeSStbJOKWkZ7pn5j0a-ELsbPou1310"
+        }
+      }
     }
   }
 }

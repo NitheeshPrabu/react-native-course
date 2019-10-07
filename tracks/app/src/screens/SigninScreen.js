@@ -14,7 +14,7 @@ const SigninScreen = () => {
     <View style={styles.container}>
       <NavigationEvents onWillBlur={clearErrors} />
       <AuthForm
-        headerText="Sign In to Your Account"
+        headerText="Sign In to Tracks"
         submitButtonText="Sign In"
         errorMessage={state.errorMessage}
         onSubmit={signin}
