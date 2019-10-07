@@ -2,7 +2,7 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
 const instance = axios.create({
-  baseURL: 'http://51ee7bdb.ngrok.io'
+  baseURL: 'https://tracks-app.herokuapp.com/' // production endpoint
 });
 
 // if a token is present in AsyncStorage, automatically use it in every request

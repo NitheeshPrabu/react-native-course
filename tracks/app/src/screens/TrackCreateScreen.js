@@ -9,7 +9,8 @@ import useLocation from '../hooks/useLocation';
 
 import Map from '../components/Map';
 import TrackForm from '../components/TrackForm';
-import '../helpers/_mockLocation';
+
+// import '../helpers/_mockLocation';   // Use only when testing
 
 const TrackCreateScreen = ({ isFocused }) => {
   const {
